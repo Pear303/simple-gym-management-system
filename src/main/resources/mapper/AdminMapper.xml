@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gym.mapper.AdminMapper">
+
+    <select id="selectByAccountAndPassword" resultType="com.gym.pojo.Admin">
+        SELECT admin_id, admin_account, admin_password
+        FROM admin
+        WHERE admin_account = #{adminAccount}
+        AND admin_password = #{adminPassword}
+    </select>
+
+    <select id="selectAll" resultType="com.gym.pojo.Admin">
+        SELECT admin_id, admin_account, admin_password
+        FROM admin
+    </select>
+
+    <insert id="insert">
+        INSERT INTO admin (admin_account, admin_password)
+        VALUES (#{adminAccount}, #{adminPassword})
+    </insert>
+
+    <update id="updatePassword">
+        UPDATE admin
+        SET admin_password = #{newPassword}
+        WHERE admin_account = #{adminAccount}
+    </update>
+
+    <delete id="deleteByAccount">
+        DELETE FROM admin
+        WHERE admin_account = #{adminAccount}
+    </delete>
+
+</mapper>

@@ -1,0 +1,41 @@
+gym-management-frontend/
+├── .gitignore              # Git 忽略文件配置
+├── .vscode/                # VS Code 编辑器配置
+│   └── extensions.json     # 推荐的 VS Code 插件
+├── node_modules/           # ⭐ 依赖包目录（自动生成）
+├── public/                 # 静态资源目录
+│   ├── favicon.svg         # 网站图标
+│   └── icons.svg           # 图标资源
+├── src/                    # ⭐ 源代码目录（核心开发区域）
+│   ├── api/                # API 接口封装
+│   │   ├── auth.js         # 认证相关接口
+│   │   ├── employee.js     # 员工管理接口
+│   │   ├── index.js        # API 统一出口
+│   │   └── member.js       # 会员管理接口
+│   ├── assets/             # 静态资源（图片、样式等）
+│   │   ├── styles/         # 样式文件
+│   │   │   ├── main.css    # 主样式
+│   │   │   └── variables.css # CSS 变量
+│   │   ├── hero.png        # 英雄图
+│   │   ├── vite.svg        # Vite 图标
+│   │   └── vue.svg         # Vue 图标
+│   ├── components/         # 可复用组件
+│   │   ├── common/         # 通用组件
+│   │   ├── layout/         # 布局组件
+│   │   └── HelloWorld.vue  # 示例组件
+│   ├── router/             # 路由配置
+│   │   └── index.js        # 路由定义
+│   ├── store/              # 状态管理（Pinia）
+│   │   ├── index.js        # Store 入口
+│   │   └── user.js         # 用户状态
+│   ├── views/              # 页面视图组件
+│   │   ├── Employee/       # 员工管理页面
+│   │   └── Member/         # 会员管理页面
+│   ├── App.vue             # ⭐ 根组件
+│   ├── main.js             # ⭐ 应用入口文件
+│   └── style.css           # 全局样式
+├── index.html              # HTML 模板
+├── package.json            # ⭐ 项目配置和依赖清单
+├── package-lock.json       # ⭐ 依赖版本锁定文件（自动生成）
+├── vite.config.js          # Vite 构建工具配置
+└── README.md               # 项目说明文档
