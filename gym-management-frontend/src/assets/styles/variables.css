@@ -1,0 +1,48 @@
+/* 健身房管理系统 - CSS变量 */
+/* 活力运动风格 */
+
+:root {
+  /* 主色调 - 活力橙 */
+  --primary-color: #FF6B35;
+  --primary-light: #FF8F66;
+  --primary-dark: #E55A2B;
+
+  /* 辅助色 - 运动蓝 */
+  --secondary-color: #4ECDC4;
+  --secondary-light: #7EDAD3;
+  --secondary-dark: #3DBDB4;
+
+  /* 中性色 */
+  --text-primary: #2D3436;
+  --text-secondary: #636E72;
+  --text-placeholder: #B2BEC3;
+
+  /* 背景色 */
+  --bg-page: #F8F9FA;
+  --bg-card: #FFFFFF;
+  --bg-header: #2D3436;
+  --bg-sidebar: #FFFFFF;
+
+  /* 功能色 */
+  --success: #00B894;
+  --warning: #FDCB6E;
+  --danger: #E74C3C;
+  --info: #74B9FF;
+
+  /* 布局尺寸 */
+  --header-height: 60px;
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 64px;
+
+  /* 圆角 */
+  --border-radius-small: 4px;
+  --border-radius-base: 8px;
+  --border-radius-large: 12px;
+
+  /* 阴影 */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  /* 过渡 */
+  --transition-base: all 0.3s ease;
+}

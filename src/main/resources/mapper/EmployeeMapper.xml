@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gym.mapper.EmployeeMapper">
+
+    <select id="selectAll" resultType="com.gym.pojo.Employee">
+        SELECT *
+        FROM employee
+    </select>
+
+    <select id="selectById" resultType="com.gym.pojo.Employee">
+        SELECT *
+        FROM employee
+        WHERE employee_id = #{employeeId}
+    </select>
+
+    <select id="selectByName" resultType="com.gym.pojo.Employee">
+        SELECT *
+        FROM employee
+        WHERE employee_name LIKE CONCAT('%', #{employeeName}, '%')
+    </select>
+
+    <select id="selectByGender" resultType="com.gym.pojo.Employee">
+        SELECT *
+        FROM employee
+        WHERE employee_gender = #{employeeGender}
+    </select>
+
+    <select id="selectByRegex" resultType="com.gym.pojo.Employee">
+        SELECT * FROM employee
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="field == 'employeeId' and operator != null">
+                <if test="operator == 'gt'">
+                    AND employee_id &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND employee_id &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND employee_id &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND employee_id &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'employeeId' and operator == null">
+                AND employee_id = #{numValue}
+            </if>
+            <if test="field == 'employeeName'">
+                AND employee_name LIKE #{likePattern}
+            </if>
+            <if test="field == 'employeeGender'">
+                AND employee_gender LIKE #{likePattern}
+            </if>
+            <if test="field == 'employeeAge' and operator != null">
+                <if test="operator == 'gt'">
+                    AND employee_age &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND employee_age &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND employee_age &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND employee_age &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'employeeAge' and operator == null">
+                AND employee_age = #{numValue}
+            </if>
+            <if test="field == 'entryTime'">
+                AND entry_time LIKE #{likePattern}
+            </if>
+            <if test="field == 'staff'">
+                AND staff LIKE #{likePattern}
+            </if>
+            <if test="field == 'employeeMessage'">
+                AND employee_message LIKE #{likePattern}
+            </if>
+        </trim>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO employee (employee_name, employee_gender, employee_age, entry_time, staff, employee_message)
+        VALUES (#{employeeName}, #{employeeGender}, #{employeeAge}, #{entryTime}, #{staff}, #{employeeMessage})
+    </insert>
+
+    <update id="update">
+        UPDATE employee
+        SET employee_name = #{employeeName},
+            employee_gender = #{employeeGender},
+            employee_age = #{employeeAge},
+            entry_time = #{entryTime},
+            staff = #{staff},
+            employee_message = #{employeeMessage}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM employee
+        WHERE employee_id = #{employeeId}
+    </delete>
+
+    <select id="selectTotalCount" resultType="int">
+        SELECT COUNT(*) FROM employee
+    </select>
+
+</mapper>
