@@ -107,7 +107,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         // 方案一：字符串模式（复用现有逻辑）
         if (value.contains("*")) {
             String cleanValue = value.replace("*", "%");
-            result.likePattern = cleanValue;
+            String normalized = normalizeDateLikePattern(cleanValue);
+            result.likePattern = normalized;
             System.out.println("[DEBUG parseDateSearchValue] 字符串模式: " + result.likePattern);
             return result;
         }
@@ -159,6 +160,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             parts.length > 2 ? Integer.parseInt(parts[2]) : 1);
     }
 
+    private String normalizeDateLikePattern(String pattern) {
+        return pattern
+            .replaceAll("(?<=[-%])(\\d)(?=[-%]|$)", "0$1")
+            .replaceAll("^(\\d)(?=[-%]|$)", "0$1");
+    }
+
     private ParseResult parseDateBetween(String value) {
         ParseResult result = new ParseResult();
         String[] parts = value.substring(8).trim().split(",");
@@ -170,11 +177,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         String start = parts[0].trim();
         String end = parts[1].trim();
 
-        if (start.matches("^\\d{4}-\\d{2}$")) {
-            start = start + "-01";
+        if (start.matches("^\\d{4}-\\d{1,2}$")) {
+            start = normalizeDate(start + "-01").substring(0, 8);
         }
-        if (end.matches("^\\d{4}-\\d{2}$")) {
-            end = getLastDayOfMonth(end + "-01");
+        if (end.matches("^\\d{4}-\\d{1,2}$")) {
+            String normalized = normalizeDate(end + "-01").substring(0, 8);
+            end = getLastDayOfMonth(normalized);
         }
 
         result.startDate = start;
@@ -187,19 +195,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         ParseResult result = new ParseResult();
 
         if (value.startsWith(">=")) {
-            result.startDate = value.substring(2).trim();
+            result.startDate = normalizeDate(value.substring(2).trim());
             System.out.println("[DEBUG parseDateComparison] >= : " + result.startDate);
         } else if (value.startsWith("<=")) {
-            result.endDate = value.substring(2).trim();
+            result.endDate = normalizeDate(value.substring(2).trim());
             System.out.println("[DEBUG parseDateComparison] <= : " + result.endDate);
         } else if (value.startsWith(">")) {
-            result.startDate = value.substring(1).trim();
-            result.endDate = getNextDay(result.startDate);
-            System.out.println("[DEBUG parseDateComparison] > : start=" + result.startDate + " end=" + result.endDate);
+            String raw = normalizeDate(value.substring(1).trim());
+            result.startDate = getNextDay(raw);
+            System.out.println("[DEBUG parseDateComparison] > : start=" + result.startDate);
         } else if (value.startsWith("<")) {
-            result.endDate = value.substring(1).trim();
-            result.startDate = getPreviousDay(result.endDate);
-            System.out.println("[DEBUG parseDateComparison] < : start=" + result.startDate + " end=" + result.endDate);
+            String raw = normalizeDate(value.substring(1).trim());
+            result.endDate = getPreviousDay(raw);
+            System.out.println("[DEBUG parseDateComparison] < : end=" + result.endDate);
         }
 
         return result;

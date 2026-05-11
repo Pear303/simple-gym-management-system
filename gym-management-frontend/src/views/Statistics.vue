@@ -28,14 +28,14 @@
         <h3>会员卡种分布</h3>
         <div class="chart-placeholder">
           <el-icon :size="48" color="#B2BEC3"><PieChart /></el-icon>
-          <p>图表占位符（需ECharts等库支持）</p>
+          <p>图表占位符</p>
         </div>
       </div>
       <div class="chart-card">
         <h3>员工职位分布</h3>
         <div class="chart-placeholder">
           <el-icon :size="48" color="#B2BEC3"><DataAnalysis /></el-icon>
-          <p>图表占位符（需ECharts等库支持）</p>
+          <p>图表占位符</p>
         </div>
       </div>
     </div>
