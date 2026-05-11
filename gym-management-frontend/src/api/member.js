@@ -8,6 +8,15 @@ export function getMemberList(params) {
   })
 }
 
+export function searchMemberByRegex(field, value) {
+  console.log('[API] POST /member/search/regex', JSON.stringify({ field, value }))
+  return request({
+    url: '/member/search/regex',
+    method: 'post',
+    data: { field, value }
+  })
+}
+
 export function addMember(data) {
   return request({
     url: '/member/add',

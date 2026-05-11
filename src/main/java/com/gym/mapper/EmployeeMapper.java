@@ -13,10 +13,12 @@ public interface EmployeeMapper {
 
     Employee selectById(@Param("employeeId") Integer employeeId);
 
-    List<Employee> selectByRegex(@Param("field") String field, 
-                            @Param("operator") String operator, 
-                            @Param("numValue") Integer numValue, 
-                            @Param("likePattern") String likePattern);
+    List<Employee> selectByRegex(@Param("field") String field,
+                            @Param("operator") String operator,
+                            @Param("numValue") Integer numValue,
+                            @Param("likePattern") String likePattern,
+                            @Param("startDate") String startDate,
+                            @Param("endDate") String endDate);
 
     int insert(Employee employee);
 

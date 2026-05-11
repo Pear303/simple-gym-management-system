@@ -15,6 +15,8 @@ public interface MemberService {
 
     List<Member> selectByKeyword(String keyword);
 
+    List<Member> selectByRegex(String field, String value, String operator, Integer numValue, String likePattern);
+
     int insert(Member member);
 
     int update(Member member);

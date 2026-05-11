@@ -26,6 +26,109 @@
            OR member_phone LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
+    <select id="selectByRegex" resultType="com.gym.pojo.Member">
+        SELECT * FROM member
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="field == 'memberId' and operator != null">
+                <if test="operator == 'gt'">
+                    AND member_id &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND member_id &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND member_id &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND member_id &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'memberId' and operator == null">
+                AND member_id = #{numValue}
+            </if>
+            <if test="field == 'memberName'">
+                AND member_name LIKE #{likePattern}
+            </if>
+            <if test="field == 'memberGender'">
+                AND member_gender LIKE #{likePattern}
+            </if>
+            <if test="field == 'memberAge' and operator != null">
+                <if test="operator == 'gt'">
+                    AND member_age &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND member_age &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND member_age &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND member_age &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'memberAge' and operator == null">
+                AND member_age = #{numValue}
+            </if>
+            <if test="field == 'memberPhone'">
+                AND CAST(member_phone AS CHAR) LIKE #{likePattern}
+            </if>
+            <if test="field == 'memberHeight' and operator != null">
+                <if test="operator == 'gt'">
+                    AND member_height &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND member_height &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND member_height &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND member_height &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'memberHeight' and operator == null">
+                AND member_height = #{numValue}
+            </if>
+            <if test="field == 'memberweight' and operator != null">
+                <if test="operator == 'gt'">
+                    AND memberweight &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND memberweight &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND memberweight &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND memberweight &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'memberweight' and operator == null">
+                AND memberweight = #{numValue}
+            </if>
+            <if test="field == 'cardClass' and operator != null">
+                <if test="operator == 'gt'">
+                    AND card_class &gt; #{numValue}
+                </if>
+                <if test="operator == 'lt'">
+                    AND card_class &lt; #{numValue}
+                </if>
+                <if test="operator == 'ge'">
+                    AND card_class &gt;= #{numValue}
+                </if>
+                <if test="operator == 'le'">
+                    AND card_class &lt;= #{numValue}
+                </if>
+            </if>
+            <if test="field == 'cardClass' and operator == null">
+                AND card_class = #{numValue}
+            </if>
+            <if test="field == 'cardTime'">
+                AND card_time LIKE #{likePattern}
+            </if>
+        </trim>
+    </select>
+
     <insert id="insert">
         INSERT INTO member (member_password, member_name, member_gender, member_age, member_height, memberweight, member_phone, card_time, card_class, card_next_class)
         VALUES (#{memberPassword}, #{memberName}, #{memberGender}, #{memberAge}, #{memberHeight}, #{memberweight}, #{memberPhone}, #{cardTime}, #{cardClass}, #{cardNextClass})

@@ -27,7 +27,7 @@
       />
       <el-button type="primary" @click="handleAddCondition">添加条件</el-button>
       <el-button @click="handleReset">清空</el-button>
-      <el-button @click="howToSearch">如何使用正则化搜索</el-button>
+      <el-button @click="howToSearch">搜索指南</el-button>
 
       <!-- 已选条件展示区域 -->
       <div class="selected-conditions" v-if="selectedConditions.length > 0">
@@ -210,7 +210,7 @@ const handleDelete = (row) => {
   }).catch(() => {})
 }
 
-// 如何使用正则化搜索
+// 入职日期正则化搜索
 const howToSearch = () => {
   ElMessageBox.alert(
     `
@@ -234,8 +234,18 @@ const howToSearch = () => {
         <li>年龄大于等于30：<code>&gt;=30</code></li>
       </ul>
       
+      <p><strong>入职日期专用模式：</strong></p>
+      <ul style="padding-left: 20px;">
+        <li>2024年内入职：<code>2024</code></li>
+        <li>2024年6月入职：<code>2024-06</code></li>
+        <li>6月入职（字符串）：<code>*-06*</code></li>
+        <li>2024年1月1日之后入职：<code>&gt;=2024-01-01</code></li>
+        <li>2024上半年入职：<code>between 2024-01,2024-06</code></li>
+        <li>精确日期：<code>2024-06-15</code></li>
+      </ul>
+      
       <p style="color: #909399; font-size: 12px; margin-top: 16px;">
-        💡 提示：可以添加多个条件进行组合搜索，系统会自动取交集
+        💡 提示：可以添加多个条件，同时组合搜索，系统会自动取交集
       </p>
     </div>
     `,

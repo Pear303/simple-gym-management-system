@@ -2,6 +2,7 @@ package com.gym.controller;
 
 import com.gym.pojo.Member;
 import com.gym.service.MemberService;
+import com.gym.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,20 @@ public class MemberController {
             result.put("success", false);
             result.put("message", e.getMessage());
             return ResponseEntity.internalServerError().body(result);
+        }
+    }
+
+    @PostMapping("/search/regex")
+    public ResponseEntity<Map<String, Object>> searchByRegex(@RequestBody Map<String, String> body) {
+        String field = body.get("field");
+        String value = body.get("value");
+        System.out.println("[DEBUG] 收到请求: field=" + field + " | value=" + value + " | value长度=" + (value != null ? value.length() : 0));
+        System.out.println("[DEBUG] value每个字符: " + (value != null ? java.util.Arrays.toString(value.toCharArray()) : "null"));
+        try {
+            List<Member> members = memberService.selectByRegex(field, value, null, null, null);
+            return ResponseEntity.ok(ResponseUtil.success(members));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(ResponseUtil.error("查询失败: " + e.getMessage()));
         }
     }
 

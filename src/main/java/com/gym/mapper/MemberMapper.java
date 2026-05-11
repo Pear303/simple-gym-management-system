@@ -17,6 +17,11 @@ public interface MemberMapper {
 
     List<Member> selectByKeyword(@Param("keyword") String keyword);
 
+    List<Member> selectByRegex(@Param("field") String field,
+                            @Param("operator") String operator,
+                            @Param("numValue") Integer numValue,
+                            @Param("likePattern") String likePattern);
+
     int insert(Member member);
 
     int update(Member member);

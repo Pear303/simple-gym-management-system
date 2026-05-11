@@ -69,7 +69,23 @@
                 AND employee_age = #{numValue}
             </if>
             <if test="field == 'entryTime'">
-                AND entry_time LIKE #{likePattern}
+                <choose>
+                    <when test="startDate != null and endDate != null">
+                        AND entry_time &gt;= #{startDate} AND entry_time &lt; #{endDate}
+                    </when>
+                    <when test="startDate != null">
+                        AND entry_time &gt;= #{startDate}
+                    </when>
+                    <when test="endDate != null">
+                        AND entry_time &lt;= #{endDate}
+                    </when>
+                    <when test="likePattern != null">
+                        AND entry_time LIKE #{likePattern}
+                    </when>
+                    <otherwise>
+                        AND entry_time LIKE CONCAT('%', #{likePattern}, '%')
+                    </otherwise>
+                </choose>
             </if>
             <if test="field == 'staff'">
                 AND staff LIKE #{likePattern}
