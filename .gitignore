@@ -38,6 +38,9 @@ node_modules/
 dist/
 .vite/
 .vite-temp/
+pnpm-lock.yaml
+coverage/
+.eslintcache
 
 # Sisyphus 工作目录
 .sisyphus/
@@ -59,6 +62,8 @@ logs/
 *.class
 *.jar
 *.war
+*.hprof
+dependency-reduced-pom.xml
 
 ### IDE 扩展 ###
 # JetBrains - 忽略工作区状态
@@ -68,6 +73,16 @@ logs/
 ### OS ###
 .DS_Store
 Thumbs.db
+Desktop.ini
+.directory
+
+# Editor temp / swap files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.temp
 
 ### ==== JetBrains IDE 缓存 ====
 # IntelliJ IDEA 配置和缓存

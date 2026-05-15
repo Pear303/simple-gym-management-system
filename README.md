@@ -55,45 +55,29 @@
 结果：健身教练、健身顾问等以"健身"开头的职位
 ```
 
-#### 3. 后缀匹配
-```
-搜索字段：备注
-输入值：*优秀
-结果：表现优秀、工作优秀等以"优秀"结尾的备注
-```
-
-#### 4. 数值比较
+#### 3. 数值比较
 ```
 搜索字段：年龄
 输入值：>25
 结果：所有年龄大于25岁的员工
 ```
 
-#### 5. 组合搜索
-你可以添加多个搜索条件，系统会自动取交集：
-```
-条件1：姓名 = *张*
-条件2：年龄 > 25
-结果：姓名包含"张"且年龄大于25岁的员工
-```
-
 ## 开发环境搭建
 
 ### 后端启动
 
-1. 克隆项目
+克隆项目
 ```bash
 git clone <repository-url>
 cd gym-management-system
 ```
 
-2. 初始化数据库
+初始化数据库
 ```bash
-# 在MySQL中执行
 mysql -u root -p < GMSSQL.sql
 ```
 
-3. 配置数据库连接
+配置数据库连接
 编辑 `src/main/resources/application.yaml`，修改数据库配置：
 ```yaml
 spring:
@@ -103,7 +87,7 @@ spring:
     password: your_password
 ```
 
-4. 启动后端
+启动后端
 ```bash
 mvn spring-boot:run
 ```
@@ -112,49 +96,22 @@ mvn spring-boot:run
 
 ### 前端启动
 
-1. 进入前端目录
+进入前端目录
 ```bash
 cd gym-management-frontend
 ```
 
-2. 安装依赖
+安装依赖
 ```bash
 npm install
 ```
 
-3. 启动开发服务器
+启动开发服务器
 ```bash
 npm run dev
 ```
 
 前端应用将在 `http://localhost:5173` 启动
-
-## 项目结构
-
-```
-gym-management-system/
-├── src/                          # 后端源码
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/gym/
-│   │   │       ├── controller/   # 控制器层
-│   │   │       ├── service/      # 业务逻辑层
-│   │   │       ├── mapper/       # 数据访问层
-│   │   │       └── entity/       # 实体类
-│   │   └── resources/
-│   │       ├── mapper/           # MyBatis XML 映射文件
-│   │       └── application.yaml  # 配置文件
-├── gym-management-frontend/      # 前端源码
-│   ├── src/
-│   │   ├── api/                  # API 接口
-│   │   ├── views/                # 页面组件
-│   │   ├── components/           # 公共组件
-│   │   ├── router/               # 路由配置
-│   │   ├── store/                # 状态管理
-│   │   └── assets/               # 静态资源
-│   └── package.json
-└── GMSSQL.sql                    # 数据库初始化脚本
-```
 
 ## API
 

@@ -16,8 +16,8 @@
         <el-option label="电话" value="memberPhone" />
         <el-option label="身高" value="memberHeight" />
         <el-option label="体重" value="memberweight" />
-        <el-option label="卡种（未完善）" value="cardClass" />
-        <el-option label="到期时间（未完善）" value="cardTime" />
+        <el-option label="卡种（可扩充）" value="cardClass" />
+        <el-option label="到期时间（可扩充）" value="cardTime" />
       </el-select>
       <el-input
         v-model="keyword"
