@@ -13,13 +13,16 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="密码" prop="memberPassword">
-            <el-input v-model="formData.memberPassword" type="password" placeholder="请输入密码" show-password />
+          <el-form-item label="姓名" prop="memberName">
+            <el-input v-model="formData.memberName" placeholder="请输入姓名" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="姓名" prop="memberName">
-            <el-input v-model="formData.memberName" placeholder="请输入姓名" />
+          <el-form-item label="性别" prop="memberGender">
+            <el-select v-model="formData.memberGender" placeholder="请选择性别" style="width: 100%">
+              <el-option label="男" value="男" />
+              <el-option label="女" value="女" />
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -99,7 +102,6 @@ const isEdit = ref(false)
 
 const formData = reactive({
   memberId: null,
-  memberPassword: '',
   memberName: '',
   memberGender: '',
   memberAge: 18,
@@ -111,9 +113,6 @@ const formData = reactive({
 })
 
 const rules = {
-  memberPassword: [
-    { required: true, message: '请输入密码', trigger: 'blur' }
-  ],
   memberName: [
     { required: true, message: '请输入姓名', trigger: 'blur' }
   ],
@@ -140,7 +139,6 @@ const open = (row = null) => {
     isEdit.value = false
     Object.assign(formData, {
       memberId: null,
-      memberPassword: '',
       memberName: '',
       memberGender: '',
       memberAge: 18,

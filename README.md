@@ -74,7 +74,12 @@ cd gym-management-system
 
 初始化数据库
 ```bash
-mysql -u root -p < GMSSQL.sql
+mysql -u root -p < create_db.sql
+```
+
+索引优化
+```bash
+
 ```
 
 配置数据库连接

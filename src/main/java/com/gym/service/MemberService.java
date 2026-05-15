@@ -9,7 +9,7 @@ public interface MemberService {
 
     Member selectById(Integer memberId);
 
-    Member selectByPhone(Long memberPhone);
+    Member selectByPhone(String memberPhone);
 
     List<Member> selectAll();
 

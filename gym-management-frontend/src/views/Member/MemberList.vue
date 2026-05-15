@@ -8,7 +8,7 @@
       </el-button>
     </div>
     <div class="search-bar">
-      <el-select v-model="searchField" placeholder="选择搜索字段" style="width: 140px;" @change="handleAddCondition">
+      <el-select v-model="searchField" placeholder="选择搜索字段" style="width: 140px;" @change="handleFieldChange">
         <el-option label="ID" value="memberId" />
         <el-option label="姓名" value="memberName" />
         <el-option label="性别" value="memberGender" />
@@ -16,17 +16,36 @@
         <el-option label="电话" value="memberPhone" />
         <el-option label="身高" value="memberHeight" />
         <el-option label="体重" value="memberweight" />
-        <el-option label="卡种（可扩充）" value="cardClass" />
-        <el-option label="到期时间（可扩充）" value="cardTime" />
+        <el-option label="卡种" value="cardClass" />
+        <el-option label="到期时间" value="cardTime" />
       </el-select>
+
+      <!-- 日期字段：显示日期选择器 + 正则输入切换 -->
+      <template v-if="isDateField">
+        <el-date-picker
+          v-model="datePickerValue"
+          type="daterange"
+          placeholder="选择日期范围"
+          value-format="YYYY-MM-DD"
+          style="width: 280px;"
+          @change="handleDatePick"
+        />
+        <el-button text size="small" @click="toggleDateInputMode">
+          {{ showRegexInput ? '📅 日期选择' : '✏️ 正则输入' }}
+        </el-button>
+      </template>
+
+      <!-- 文本输入（非日期字段 或 切换后显示） -->
       <el-input
+        v-if="!isDateField || showRegexInput"
         v-model="keyword"
-        placeholder="示例: [数值]>25 *[包含]* [前缀]* *[后缀]"
+        :placeholder="isDateField ? '示例: >2026-01-01 between 2026-01,2026-06' : '示例: [数值]>25 *[包含]* [前缀]* *[后缀]'"
         clearable
         style="width: 280px;"
         @keyup.enter="handleAddCondition"
         @clear="handleClearKeyword"
       />
+
       <el-button type="primary" @click="handleAddCondition">添加条件</el-button>
       <el-button @click="handleReset">清空</el-button>
       <el-button @click="howToSearch">搜索指南</el-button>
@@ -40,11 +59,11 @@
           @close="handleRemoveCondition(index)"
           class="condition-tag"
         >
-          {{ getFieldLabel(condition.field) }}: {{ condition.value }}
+          {{ getFieldLabel(condition.field) }}: {{ condition.display || condition.value }}
         </el-tag>
       </div>
     </div>
-    <el-table v-loading="loading" :data="memberList" stripe style="width: 100%">
+    <el-table v-loading="loading" :data="pagedData" stripe style="width: 100%">
       <el-table-column prop="memberId" label="ID" width="60" />
       <el-table-column prop="memberName" label="姓名" width="80" />
       <el-table-column prop="memberGender" label="性别" width="60" />
@@ -66,23 +85,82 @@
       </el-table-column>
     </el-table>
 
+    <el-pagination
+      v-model:current-page="currentPage"
+      v-model:page-size="currentPageSize"
+      :page-sizes="[10, 20, 30, 50, 100]"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      class="pagination"
+      @size-change="handleSizeChange"
+      @current-change="handlePageChange"
+    />
+
     <MemberForm ref="memberFormRef" @success="loadMembers" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus, Search } from '@element-plus/icons-vue'
 import MemberForm from './MemberForm.vue'
 import { getMemberList, deleteMember, searchMemberByRegex } from '@/api/member'
+import { createPagination } from '@/utils/pagination'
 
-const memberList = ref([])
+const {
+  currentPage,
+  currentPageSize,
+  pagedData,
+  total,
+  updateData,
+  handlePageChange,
+  handleSizeChange
+} = createPagination(30)
+
 const keyword = ref('')
 const searchField = ref('')
 const loading = ref(false)
 const memberFormRef = ref()
 const selectedConditions = ref([])
+const datePickerValue = ref(null)
+const showRegexInput = ref(false)
+
+// 日期字段判断
+const isDateField = computed(() => searchField.value === 'cardTime')
+
+// 字段切换时重置状态
+const handleFieldChange = () => {
+  showRegexInput.value = false
+  datePickerValue.value = null
+}
+
+// 日期选择回调
+const handleDatePick = (val) => {
+  if (!val) return
+
+  const field = searchField.value
+  let value, display
+
+  if (Array.isArray(val)) {
+    // 日期范围：转换为 between 语法
+    value = `between ${val[0]},${val[1]}`
+    display = `${val[0]} ~ ${val[1]}`
+  } else {
+    // 单个日期：精确匹配
+    value = val
+    display = val
+  }
+
+  selectedConditions.value.push({ field, value, display })
+  datePickerValue.value = null
+  loadMembers()
+}
+
+// 切换日期选择/正则输入模式
+const toggleDateInputMode = () => {
+  showRegexInput.value = !showRegexInput.value
+}
 
 // 字段标签映射
 const fieldLabels = {
@@ -153,7 +231,7 @@ const loadMembers = async () => {
     if (selectedConditions.value.length === 0) {
       const res = await getMemberList()
       if (res.success) {
-        memberList.value = res.data || []
+        updateData(res.data || [])
       }
     } else {
       let resultList = null
@@ -171,7 +249,7 @@ const loadMembers = async () => {
           }
         }
       }
-      memberList.value = resultList || []
+      updateData(resultList || [])
     }
   } catch (error) {
     ElMessage.error('获取会员列表失败')
@@ -184,6 +262,8 @@ const handleReset = () => {
   keyword.value = ''
   searchField.value = ''
   selectedConditions.value = []
+  datePickerValue.value = null
+  showRegexInput.value = false
   loadMembers()
 }
 
@@ -232,12 +312,22 @@ const howToSearch = () => {
       </ul>
       
       <p><strong>使用示例：</strong></p>
-      <ul style="padding-left: 20px;">
-        <li>姓名包含"张"：<code>*张*</code></li>
-        <li>电话以"138"开头：<code>138*</code></li>
-        <li>体重小于60：<code>&lt;60</code></li>
-        <li>卡种为月卡：<code>1</code></li>
-      </ul>
+        <ul style="padding-left: 20px;">
+          <li>姓名包含"张"：<code>*张*</code></li>
+          <li>电话以"138"开头：<code>138*</code></li>
+          <li>体重小于60：<code>&lt;60</code></li>
+          <li>卡种为月卡：<code>1</code></li>
+        </ul>
+
+        <p><strong>到期时间（cardTime）专用模式：</strong></p>
+        <ul style="padding-left: 20px;">
+          <li>2024年内到期：<code>2024</code></li>
+          <li>2024年6月到期：<code>2024-06</code></li>
+          <li>6月到期（字符串）：<code>*-06*</code></li>
+          <li>2024年1月1日之后到期：<code>&gt;=2024-01-01</code></li>
+          <li>2024上半年到期：<code>between 2024-01,2024-06</code></li>
+          <li>精确日期：<code>2024-06-15</code></li>
+        </ul>
       
       <p style="color: #909399; font-size: 12px; margin-top: 16px;">
         💡 提示：可以添加多个条件，同时组合搜索，系统会自动取交集
@@ -295,5 +385,11 @@ onMounted(() => {
 
 .condition-tag {
   margin-right: 4px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

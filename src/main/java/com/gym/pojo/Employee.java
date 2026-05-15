@@ -1,5 +1,7 @@
 package com.gym.pojo;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,7 @@ public class Employee {
     private String employeeName;
     private String employeeGender;
     private Integer employeeAge;
-    private String entryTime;
+    private LocalDate entryTime;
     private String staff;
     private String employeeMessage;
 }

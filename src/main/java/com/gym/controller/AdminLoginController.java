@@ -35,11 +35,15 @@ public class AdminLoginController {
 
     @PostMapping("/admin-login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Admin admin) {
+        System.out.println("[LOGIN] 收到请求: account=" + admin.getAdminAccount() + ", password=" + admin.getAdminPassword());
+
         if (admin == null || admin.getAdminAccount() == null || admin.getAdminPassword() == null) {
             return ResponseEntity.badRequest().body(ResponseUtil.error("请求参数不完整"));
         }
         try {
             Admin loggedIn = adminService.adminLogin(admin);
+            System.out.println("[LOGIN] 查询结果: " + (loggedIn != null ? "success, id=" + loggedIn.getAdminId() : "null"));
+
             if (loggedIn == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseUtil.unauthorized("账号或密码错误"));
             }

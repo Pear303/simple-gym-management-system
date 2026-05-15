@@ -11,7 +11,7 @@ public interface MemberMapper {
 
     Member selectById(@Param("memberId") Integer memberId);
 
-    Member selectByPhone(@Param("memberPhone") Long memberPhone);
+    Member selectByPhone(@Param("memberPhone") String memberPhone);
 
     List<Member> selectAll();
 
@@ -20,7 +20,9 @@ public interface MemberMapper {
     List<Member> selectByRegex(@Param("field") String field,
                             @Param("operator") String operator,
                             @Param("numValue") Integer numValue,
-                            @Param("likePattern") String likePattern);
+                            @Param("likePattern") String likePattern,
+                            @Param("startDate") String startDate,
+                            @Param("endDate") String endDate);
 
     int insert(Member member);
 

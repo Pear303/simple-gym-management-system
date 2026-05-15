@@ -13,9 +13,3 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.gym.pojo
-
-deepseek:
-  api:
-    url: https://api.deepseek.com
-    key: ${DEEPSEEK_KEY:}
-    model: deepseek-v4-flash

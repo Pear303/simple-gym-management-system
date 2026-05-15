@@ -49,23 +49,15 @@ const router = createRouter({
   × 不需要写任何匹配逻辑代码
 */
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   const token = localStorage.getItem('token')
 
-  console.log('路由守卫触发，目标路径：', to.path)
-  console.log('token: ' + localStorage.getItem('token'))
-  console.log('adminInfo: ' + localStorage.getItem('adminInfo'))
+  if (to.path !== '/login' && !token) {
+    return '/login'
+  }
 
-  if (to.path !== '/login' && !token) {  // 非登录页面且无访问数据，重定向到登录页
-    console.log('localStorage 中的 token：' + localStorage.getItem('token'))
-    console.log('localStorage 中的 adminInfo：' + localStorage.getItem('adminInfo'))
-    
-    next('/login')
-    
-  } else if (to.path === '/login' && token) {  // 登录页面且有访问数据，重定向到首页
-    next('/dashboard')
-  } else {
-    next()
+  if (to.path === '/login' && token) {
+    return '/dashboard'
   }
 })
 

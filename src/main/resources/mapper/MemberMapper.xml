@@ -70,7 +70,7 @@
                 AND member_age = #{numValue}
             </if>
             <if test="field == 'memberPhone'">
-                AND CAST(member_phone AS CHAR) LIKE #{likePattern}
+                AND member_phone LIKE #{likePattern}
             </if>
             <if test="field == 'memberHeight' and operator != null">
                 <if test="operator == 'gt'">
@@ -124,20 +124,35 @@
                 AND card_class = #{numValue}
             </if>
             <if test="field == 'cardTime'">
-                AND card_time LIKE #{likePattern}
+                <choose>
+                    <when test="startDate != null and endDate != null">
+                        AND card_time &gt;= #{startDate} AND card_time &lt; #{endDate}
+                    </when>
+                    <when test="startDate != null">
+                        AND card_time &gt;= #{startDate}
+                    </when>
+                    <when test="endDate != null">
+                        AND card_time &lt;= #{endDate}
+                    </when>
+                    <when test="likePattern != null">
+                        AND card_time LIKE #{likePattern}
+                    </when>
+                    <otherwise>
+                        AND card_time LIKE CONCAT('%', #{likePattern}, '%')
+                    </otherwise>
+                </choose>
             </if>
         </trim>
     </select>
 
     <insert id="insert">
-        INSERT INTO member (member_password, member_name, member_gender, member_age, member_height, memberweight, member_phone, card_time, card_class, card_next_class)
-        VALUES (#{memberPassword}, #{memberName}, #{memberGender}, #{memberAge}, #{memberHeight}, #{memberweight}, #{memberPhone}, #{cardTime}, #{cardClass}, #{cardNextClass})
+        INSERT INTO member (member_name, member_gender, member_age, member_height, memberweight, member_phone, card_time, card_class, card_next_class)
+        VALUES (#{memberName}, #{memberGender}, #{memberAge}, #{memberHeight}, #{memberweight}, #{memberPhone}, #{cardTime}, #{cardClass}, #{cardNextClass})
     </insert>
 
     <update id="update">
         UPDATE member
-        SET member_password = #{memberPassword},
-            member_name = #{memberName},
+        SET member_name = #{memberName},
             member_gender = #{memberGender},
             member_age = #{memberAge},
             member_height = #{memberHeight},
