@@ -12,8 +12,7 @@ import java.util.Map;
 
 public class JwtUtil {
 
-    // ⚠️⚠️⚠️ 密钥：实际项目中应配置在 application.yml 中，这里为了演示硬编码
-    // 长度必须足够长（至少32字节），否则报错
+    // 密钥
     private static final String SECRET_KEY = "mySuperSecretKeyForGymManagementSystem1234567890!@#$%^&*";
 
     // Token 有效期 2 小时
