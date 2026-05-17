@@ -6,6 +6,10 @@ import com.gym.mapper.MemberMapper;
 import com.gym.pojo.Member;
 import com.gym.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +21,13 @@ public class MemberServiceImpl implements MemberService {
     private MemberMapper memberMapper;
 
     @Override
+    @Cacheable(value = "memberCount", unless = "#result == null")
     public Integer selectTotalCount() {
         return memberMapper.selectTotalCount();
     }
 
     @Override
+    @Cacheable(value = "member:detail", key = "#memberId", unless = "#result == null")
     public Member selectById(Integer memberId) {
         return memberMapper.selectById(memberId);
     }
@@ -51,8 +57,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Cacheable(value = "member:page", key = "#pageNum + '-' + #pageSize")
     public PageResult<MemberDTO> getMemberPage(int pageNum, int pageSize) {
-        // 偏移量 = (页数-1) * 每页数量
         int offset = (pageNum - 1) * pageSize;
         List<MemberDTO> list = memberMapper.selectPage(offset, pageSize);
         int total = memberMapper.selectTotalCount();
@@ -315,16 +321,30 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "memberCount", allEntries = true),
+        @CacheEvict(value = "member:page", allEntries = true)
+    })
     public int insert(Member member) {
         return memberMapper.insert(member);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "member:detail", key = "#member.memberId"),
+        @CacheEvict(value = "memberCount", allEntries = true),
+        @CacheEvict(value = "member:page", allEntries = true)
+    })
     public int update(Member member) {
         return memberMapper.update(member);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "member:detail", key = "#memberId"),
+        @CacheEvict(value = "memberCount", allEntries = true),
+        @CacheEvict(value = "member:page", allEntries = true)
+    })
     public int delete(Integer memberId) {
         return memberMapper.deleteById(memberId);
     }

@@ -4,6 +4,9 @@ import com.gym.mapper.EmployeeMapper;
 import com.gym.pojo.Employee;
 import com.gym.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,18 +17,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Override
+    @Cacheable(value = "employeeCount", unless = "#result <= 0")
     public int selectTotalCount() {
         return employeeMapper.selectTotalCount();
     }
 
     @Override
-    public List<Employee> selectAll() {
-        return employeeMapper.selectAll();
+    @Cacheable(value = "employee:detail", key = "#employeeId", unless = "#result == null")
+    public Employee selectById(Integer employeeId) {
+        return employeeMapper.selectById(employeeId);
     }
 
     @Override
-    public Employee selectById(Integer employeeId) {
-        return employeeMapper.selectById(employeeId);
+    public List<Employee> selectAll() {
+        return employeeMapper.selectAll();
     }
 
     @Override
@@ -293,16 +298,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "employeeCount", allEntries = true)
+    })
     public int delete(Integer employeeId) {
         return employeeMapper.deleteById(employeeId);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "employeeCount", allEntries = true)
+    })
     public int insert(Employee employee) {
         return employeeMapper.insert(employee);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "employee:detail", key = "#employee.employeeId"),
+        @CacheEvict(value = "employeeCount", allEntries = true)
+    })
     public int update(Employee employee) {
         return employeeMapper.update(employee);
     }
