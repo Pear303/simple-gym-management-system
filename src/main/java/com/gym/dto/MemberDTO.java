@@ -1,11 +1,9 @@
-package com.gym.pojo;
+package com.gym.dto;
 
 import java.time.LocalDate;
-
 import lombok.Data;
-
 @Data
-public class Member {
+public class MemberDTO {
     private Integer memberId;
     private String memberName;
     private String memberGender;
@@ -15,5 +13,5 @@ public class Member {
     private String memberPhone;
     private LocalDate cardTime;
     private Integer cardClass;
-    private Integer cardNextClass;
 }
+

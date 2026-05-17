@@ -1,5 +1,6 @@
 package com.gym.mapper;
 
+import com.gym.dto.MemberDTO;
 import com.gym.pojo.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,4 +32,6 @@ public interface MemberMapper {
     int deleteById(@Param("memberId") Integer memberId);
 
     Integer selectTotalCount();
+
+    List<MemberDTO> selectPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
 }

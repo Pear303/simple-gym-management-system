@@ -3,31 +3,42 @@
 <mapper namespace="com.gym.mapper.MemberMapper">
 
     <select id="selectById" resultType="com.gym.pojo.Member">
-        SELECT *
+        SELECT member_id, member_name, member_gender, member_age,
+               member_height, memberweight, member_phone,
+               card_time, card_class, card_next_class
         FROM member
         WHERE member_id = #{memberId}
     </select>
 
     <select id="selectByPhone" resultType="com.gym.pojo.Member">
-        SELECT *
+        SELECT member_id, member_name, member_gender, member_age,
+               member_height, memberweight, member_phone,
+               card_time, card_class
         FROM member
         WHERE member_phone = #{memberPhone}
     </select>
 
     <select id="selectAll" resultType="com.gym.pojo.Member">
-        SELECT *
+        SELECT member_id, member_name, member_gender, member_age,
+               member_height, memberweight, member_phone,
+               card_time, card_class
         FROM member
     </select>
 
     <select id="selectByKeyword" resultType="com.gym.pojo.Member">
-        SELECT *
+        SELECT member_id, member_name, member_gender, member_age,
+               member_height, memberweight, member_phone,
+               card_time, card_class
         FROM member
         WHERE member_name LIKE CONCAT('%', #{keyword}, '%')
            OR member_phone LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="selectByRegex" resultType="com.gym.pojo.Member">
-        SELECT * FROM member
+        SELECT member_id, member_name, member_gender, member_age,
+               member_height, memberweight, member_phone,
+               card_time, card_class
+        FROM member
         <trim prefix="WHERE" prefixOverrides="AND|OR">
             <if test="field == 'memberId' and operator != null">
                 <if test="operator == 'gt'">
@@ -145,9 +156,19 @@
         </trim>
     </select>
 
+    <!-- 分页，只查当前页需要的数据 -->
+    <select id="selectPage" resultType="com.gym.dto.MemberDTO">
+        SELECT member_id, member_name, member_gender, member_age,
+        member_height, member_weight, member_phone,
+        card_time, card_class
+        FROM member
+        ORDER BY member_id
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
     <insert id="insert">
-        INSERT INTO member (member_name, member_gender, member_age, member_height, memberweight, member_phone, card_time, card_class, card_next_class)
-        VALUES (#{memberName}, #{memberGender}, #{memberAge}, #{memberHeight}, #{memberweight}, #{memberPhone}, #{cardTime}, #{cardClass}, #{cardNextClass})
+        INSERT INTO member (member_name, member_gender, member_age, member_height, member_weight, member_phone, card_time, card_class, card_next_class)
+        VALUES (#{memberName}, #{memberGender}, #{memberAge}, #{memberHeight}, #{memberWeight}, #{memberPhone}, #{cardTime}, #{cardClass}, #{cardNextClass})
     </insert>
 
     <update id="update">
@@ -156,7 +177,7 @@
             member_gender = #{memberGender},
             member_age = #{memberAge},
             member_height = #{memberHeight},
-            memberweight = #{memberweight},
+            member_weight = #{memberWeight},
             member_phone = #{memberPhone},
             card_time = #{cardTime},
             card_class = #{cardClass},

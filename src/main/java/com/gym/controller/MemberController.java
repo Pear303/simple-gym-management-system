@@ -1,5 +1,7 @@
 package com.gym.controller;
 
+import com.gym.dto.MemberDTO;
+import com.gym.dto.PageResult;
 import com.gym.pojo.Member;
 import com.gym.service.MemberService;
 import com.gym.util.ResponseUtil;
@@ -18,26 +20,6 @@ public class MemberController {
 
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
-    }
-
-    @GetMapping("/list")
-    public ResponseEntity<Map<String, Object>> list(@RequestParam(required = false) String keyword) {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            List<Member> members;
-            if (keyword != null && !keyword.trim().isEmpty()) {
-                members = memberService.selectByKeyword(keyword);
-            } else {
-                members = memberService.selectAll();
-            }
-            result.put("success", true);
-            result.put("data", members);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.internalServerError().body(result);
-        }
     }
 
     @GetMapping("/search/id/{id}")
@@ -69,6 +51,18 @@ public class MemberController {
         try {
             List<Member> members = memberService.selectByRegex(field, value, null, null, null);
             return ResponseEntity.ok(ResponseUtil.success(members));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(ResponseUtil.error("查询失败: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Map<String, Object>> list(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "30") int pageSize) {
+        try {
+            PageResult<MemberDTO> pageResult = memberService.getMemberPage(pageNum, pageSize);
+            return ResponseEntity.ok(ResponseUtil.success(pageResult));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(ResponseUtil.error("查询失败: " + e.getMessage()));
         }

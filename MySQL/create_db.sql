@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS member (
     member_gender VARCHAR(10) COMMENT '会员性别',
     member_age INT COMMENT '会员年龄',
     member_height INT COMMENT '会员身高(cm)',
-    memberweight INT COMMENT '会员体重(kg)',
+    member_weight INT COMMENT '会员体重(kg)',
     member_phone VARCHAR(20) COMMENT '会员电话',
     card_time DATE COMMENT '开卡时间',
     card_class INT DEFAULT 0 COMMENT '剩余课程数',
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS member (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='会员表';
 
 -- 6.5. 插入测试会员数据
-INSERT INTO member (member_name, member_gender, member_age, member_height, memberweight, member_phone, card_time, card_class, card_next_class) VALUES
+INSERT INTO member (member_name, member_gender, member_age, member_height, member_weight, member_phone, card_time, card_class, card_next_class) VALUES
 ('张三', '男', 25, 175, 70,'13800138001','2026-01-01', 1, 1),
 ('李四', '女', 28, 165, 55,'13800138002','2026-01-05', 2, 2),
 ('王五', '男', 30, 180, 75,'13800138003','2026-02-01', 3, 3),
@@ -594,13 +594,19 @@ INSERT INTO employee (employee_name, employee_gender, employee_age, entry_time, 
 -- 性能优化索引
 
 -- 员工表索引
-CREATE INDEX idx_employee_name ON employee(employee_name);
-CREATE INDEX idx_employee_age ON employee(employee_age);
+CREATE INDEX idx_employee_name_cover ON employee(
+    employee_name, employee_gender, employee_age,
+    entry_time, staff
+);
 CREATE INDEX idx_employee_staff ON employee(staff);
 CREATE INDEX idx_employee_entry_time ON employee(entry_time);
 
 -- 会员表索引
-CREATE INDEX idx_member_phone ON member(member_phone);
+CREATE INDEX idx_member_phone_cover ON member(
+    member_phone, member_id, member_name,
+    member_gender, member_age, member_height,
+    member_weight, card_time
+);
 CREATE INDEX idx_member_card_time ON member(card_time);
 
 -- 课程表索引

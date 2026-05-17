@@ -229,8 +229,9 @@ const loadMembers = async () => {
   loading.value = true
   try {
     if (selectedConditions.value.length === 0) {
-      const res = await getMemberList()
+      const res = await getMemberList(currentPage.value, currentPageSize.value)
       if (res.success) {
+        total.value = res.data.total
         updateData(res.data || [])
       }
     } else {

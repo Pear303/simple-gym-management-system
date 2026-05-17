@@ -3,30 +3,36 @@
 <mapper namespace="com.gym.mapper.EmployeeMapper">
 
     <select id="selectAll" resultType="com.gym.pojo.Employee">
-        SELECT *
+        SELECT employee_id, employee_name, employee_gender, employee_age,
+               entry_time, staff, employee_message
         FROM employee
     </select>
 
     <select id="selectById" resultType="com.gym.pojo.Employee">
-        SELECT *
+        SELECT employee_id, employee_name, employee_gender, employee_age,
+               entry_time, staff, employee_message
         FROM employee
         WHERE employee_id = #{employeeId}
     </select>
 
     <select id="selectByName" resultType="com.gym.pojo.Employee">
-        SELECT *
+        SELECT employee_id, employee_name, employee_gender, employee_age,
+               entry_time, staff, employee_message
         FROM employee
         WHERE employee_name LIKE CONCAT('%', #{employeeName}, '%')
     </select>
 
     <select id="selectByGender" resultType="com.gym.pojo.Employee">
-        SELECT *
+        SELECT employee_id, employee_name, employee_gender, employee_age,
+               entry_time, staff, employee_message
         FROM employee
         WHERE employee_gender = #{employeeGender}
     </select>
 
     <select id="selectByRegex" resultType="com.gym.pojo.Employee">
-        SELECT * FROM employee
+        SELECT employee_id, employee_name, employee_gender, employee_age,
+               entry_time, staff, employee_message
+        FROM employee
         <trim prefix="WHERE" prefixOverrides="AND|OR">
             <if test="field == 'employeeId' and operator != null">
                 <if test="operator == 'gt'">

@@ -1,5 +1,7 @@
 package com.gym.service.impl;
 
+import com.gym.dto.MemberDTO;
+import com.gym.dto.PageResult;
 import com.gym.mapper.MemberMapper;
 import com.gym.pojo.Member;
 import com.gym.service.MemberService;
@@ -48,6 +50,15 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.selectByRegex(field, operator, numValue, likePattern, null, null);
     }
 
+    @Override
+    public PageResult<MemberDTO> getMemberPage(int pageNum, int pageSize) {
+        // 偏移量 = (页数-1) * 每页数量
+        int offset = (pageNum - 1) * pageSize;
+        List<MemberDTO> list = memberMapper.selectPage(offset, pageSize);
+        int total = memberMapper.selectTotalCount();
+        return new PageResult<>(total, list);
+    }
+
     private ParseResult parseSearchValue(String field, String value) {
         ParseResult result = new ParseResult();
 
@@ -60,7 +71,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         boolean isNumericField = "memberId".equals(field) || "memberAge".equals(field) ||
-                                  "memberHeight".equals(field) || "memberweight".equals(field) ||
+                                  "memberHeight".equals(field) || "memberWeight".equals(field) ||
                                   "cardClass".equals(field);
 
         if (isNumericField) {
@@ -127,8 +138,7 @@ public class MemberServiceImpl implements MemberService {
 
         if (value.contains("*")) {
             String cleanValue = value.replace("*", "%");
-            String normalized = normalizeDateLikePattern(cleanValue);
-            result.likePattern = normalized;
+            result.likePattern = normalizeDateLikePattern(cleanValue);
             System.out.println("[DEBUG parseDateSearchValue] 字符串模式: " + result.likePattern);
             return result;
         }

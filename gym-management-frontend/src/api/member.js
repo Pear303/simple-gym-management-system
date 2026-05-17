@@ -1,10 +1,10 @@
 import request from './index'
 
-export function getMemberList(params) {
+export function getMemberList(pageNum = 1, pageSize = 30) {
   return request({
     url: '/member/list',
     method: 'get',
-    params
+    params: { pageNum, pageSize }
   })
 }
 
