@@ -5,9 +5,9 @@
       :collapse="collapse"
       router
       class="sidebar-menu"
-      background-color="#fff"
-      text-color="#636E72"
-      active-text-color="#FF6B35"
+      background-color="transparent"
+      text-color="#666666"
+      active-text-color="#1A1A1A"
     >
       <el-menu-item index="/dashboard">
         <el-icon><Odometer /></el-icon>
@@ -58,15 +58,20 @@ const activeMenu = computed(() => route.path)
 }
 
 .sidebar-menu :deep(.el-menu-item) {
-  height: 56px;
-  line-height: 56px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 13px;
+  border-radius: 0;
+  margin: 0;
+  transition: all 0.15s ease;
 }
 
 .sidebar-menu :deep(.el-menu-item.is-active) {
-  background: linear-gradient(90deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 500;
 }
 
 .sidebar-menu :deep(.el-menu-item:hover) {
-  background: #f5f7fa;
+  background: rgba(0, 0, 0, 0.02);
 }
 </style>

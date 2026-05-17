@@ -1,48 +1,151 @@
-/* 健身房管理系统 - CSS变量 */
-/* 活力运动风格 */
+/* 健身房管理系统 - 极简主义 CSS 变量 */
+/* Minimalism & Swiss Style */
 
 :root {
-  /* 主色调 - 活力橙 */
-  --primary-color: #FF6B35;
-  --primary-light: #FF8F66;
-  --primary-dark: #E55A2B;
+  /* ========== 品牌色（克制使用，仅作点缀） ========== */
+  --primary-color: #2C2C2C;
+  --primary-light: #4A4A4A;
+  --primary-dark: #1A1A1A;
 
-  /* 辅助色 - 运动蓝 */
-  --secondary-color: #4ECDC4;
-  --secondary-light: #7EDAD3;
-  --secondary-dark: #3DBDB4;
+  /* ========== 中性色（核心色调） ========== */
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
+  --text-placeholder: #999999;
 
-  /* 中性色 */
-  --text-primary: #2D3436;
-  --text-secondary: #636E72;
-  --text-placeholder: #B2BEC3;
-
-  /* 背景色 */
-  --bg-page: #F8F9FA;
+  /* ========== 背景色 ========== */
+  --bg-page: #FAFAFA;
   --bg-card: #FFFFFF;
-  --bg-header: #2D3436;
-  --bg-sidebar: #FFFFFF;
+  --bg-header: #1A1A1A;
+  --bg-sidebar: #F5F5F5;
 
-  /* 功能色 */
-  --success: #00B894;
-  --warning: #FDCB6E;
-  --danger: #E74C3C;
-  --info: #74B9FF;
+  /* ========== 边框 ========== */
+  --border-color: #E8E8E8;
+  --border-color-light: #F0F0F0;
 
-  /* 布局尺寸 */
-  --header-height: 60px;
-  --sidebar-width: 220px;
-  --sidebar-collapsed-width: 64px;
+  /* ========== 功能色（降低饱和度） ========== */
+  --success: #2D7D46;
+  --warning: #B8860B;
+  --danger: #C0392B;
+  --info: #555555;
 
-  /* 圆角 */
-  --border-radius-small: 4px;
-  --border-radius-base: 8px;
-  --border-radius-large: 12px;
+  /* ========== 强调色（品牌记忆色，极少使用） ========== */
+  --accent: #FF6B35;
+  --accent-light: rgba(255, 107, 53, 0.08);
 
-  /* 阴影 */
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+  /* ========== 布局尺寸 ========== */
+  --header-height: 56px;
+  --sidebar-width: 200px;
+  --sidebar-collapsed-width: 56px;
 
-  /* 过渡 */
-  --transition-base: all 0.3s ease;
+  /* ========== 圆角（趋于直角） ========== */
+  --border-radius-sm: 2px;
+  --border-radius-base: 4px;
+  --border-radius-lg: 6px;
+
+  /* ========== 阴影（极简：几乎无） ========== */
+  --shadow-none: none;
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  /* ========== 间距 ========== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* ========== 排版 ========== */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+
+  /* ========== 过渡 ========== */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+}
+
+/* ========== Element Plus 主题覆盖 ========== */
+
+:root {
+  --el-color-primary: var(--primary-color);
+  --el-color-primary-light-3: var(--primary-light);
+  --el-color-primary-light-5: #666666;
+  --el-color-primary-light-7: #999999;
+  --el-color-primary-light-8: #CCCCCC;
+  --el-color-primary-light-9: #E8E8E8;
+  --el-color-primary-dark-2: var(--primary-dark);
+
+  --el-color-success: var(--success);
+  --el-color-warning: var(--warning);
+  --el-color-danger: var(--danger);
+  --el-color-info: var(--info);
+
+  --el-bg-color: var(--bg-card);
+  --el-bg-color-page: var(--bg-page);
+  --el-bg-color-overlay: var(--bg-card);
+  --el-fill-color-blank: var(--bg-card);
+  --el-fill-color-light: var(--bg-page);
+  --el-fill-color-lighter: var(--bg-page);
+
+  --el-text-color-primary: var(--text-primary);
+  --el-text-color-regular: var(--text-secondary);
+  --el-text-color-secondary: var(--text-placeholder);
+  --el-text-color-placeholder: var(--text-placeholder);
+
+  --el-border-color: var(--border-color);
+  --el-border-color-light: var(--border-color-light);
+  --el-border-color-lighter: var(--border-color-light);
+  --el-border-color-extra-light: var(--border-color-light);
+
+  --el-border-radius-base: var(--border-radius-base);
+  --el-border-radius-small: var(--border-radius-sm);
+  --el-border-radius-round: var(--border-radius-lg);
+
+  --el-box-shadow-light: var(--shadow-subtle);
+  --el-box-shadow: var(--shadow-subtle);
+  --el-box-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  --el-font-family: var(--font-family);
+  --el-font-size-base: var(--font-size-base);
+
+  --el-input-bg-color: var(--bg-card);
+  --el-input-border-color: var(--border-color);
+  --el-input-hover-border-color: var(--text-secondary);
+  --el-input-focus-border-color: var(--text-primary);
+  --el-input-placeholder-color: var(--text-placeholder);
+  --el-input-text-color: var(--text-primary);
+  --el-input-icon-color: var(--text-placeholder);
+
+  --el-button-font-weight: 500;
+  --el-button-border-color: var(--border-color);
+  --el-button-hover-border-color: var(--text-secondary);
+  --el-button-active-border-color: var(--text-primary);
+
+  --el-table-border-color: var(--border-color-light);
+  --el-table-header-bg-color: var(--bg-page);
+  --el-table-row-hover-bg-color: var(--bg-page);
+  --el-table-current-row-bg-color: var(--accent-light);
+  --el-table-text-color: var(--text-primary);
+  --el-table-header-text-color: var(--text-secondary);
+
+  --el-menu-bg-color: transparent;
+  --el-menu-hover-bg-color: rgba(0, 0, 0, 0.03);
+  --el-menu-text-color: var(--text-secondary);
+  --el-menu-active-color: var(--text-primary);
+  --el-menu-hover-text-color: var(--text-primary);
+
+  --el-pagination-button-bg-color: var(--bg-card);
+  --el-pagination-hover-color: var(--text-primary);
+
+  --el-dialog-bg-color: var(--bg-card);
+  --el-overlay-color-lighter: rgba(0, 0, 0, 0.3);
+
+  --el-dropdown-menuItem-hover-fill: var(--bg-page);
+  --el-dropdown-menuItem-hover-color: var(--text-primary);
 }

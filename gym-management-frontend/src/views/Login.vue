@@ -8,7 +8,7 @@
     <div class="login-card">
       <div class="login-header">
         <div class="logo">
-          <el-icon :size="40" color="#FF6B35"><Aim /></el-icon>
+          <el-icon :size="32" color="#fff"><Aim /></el-icon>
         </div>
         <h1>健身房管理系统</h1>
         <p>Gym Management System</p>
@@ -124,130 +124,85 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  position: relative;
-  overflow: hidden;
+  background: #FAFAFA;
 }
 
 .login-bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.bg-shape {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-}
-
-.bg-shape-1 {
-  width: 400px;
-  height: 400px;
-  background: #FF6B35;
-  top: -100px;
-  right: -100px;
-  animation: float 8s ease-in-out infinite;
-}
-
-.bg-shape-2 {
-  width: 300px;
-  height: 300px;
-  background: #4ECDC4;
-  bottom: -50px;
-  left: -50px;
-  animation: float 10s ease-in-out infinite reverse;
-}
-
-.bg-shape-3 {
-  width: 200px;
-  height: 200px;
-  background: #FF6B35;
-  top: 50%;
-  left: 30%;
-  animation: float 12s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(10deg); }
+  display: none;
 }
 
 .login-card {
-  width: 420px;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 380px;
+  padding: 48px 40px;
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
   position: relative;
-  z-index: 1;
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .logo {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8F66 100%);
-  border-radius: 20px;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  background: #1A1A1A;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
 }
 
 .login-header h1 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #2D3436;
+  font-size: 20px;
+  font-weight: 500;
+  color: #1A1A1A;
   margin-bottom: 8px;
+  letter-spacing: 1px;
 }
 
 .login-header p {
-  font-size: 14px;
-  color: #636E72;
+  font-size: 13px;
+  color: #999999;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .login-form {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .login-form :deep(.el-input__wrapper) {
-  border-radius: 8px;
-  padding: 4px 12px;
+  box-shadow: none;
+  border-radius: 2px;
 }
 
 .login-form :deep(.el-input__wrapper:hover) {
-  box-shadow: 0 0 0 1px #FF6B35;
+  box-shadow: 0 0 0 1px #999;
 }
 
 .login-form :deep(.el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 1px #FF6B35;
+  box-shadow: 0 0 0 1px #1A1A1A;
 }
 
 .login-btn {
   width: 100%;
-  height: 48px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8F66 100%);
+  height: 44px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  border-radius: 2px;
+  background: #1A1A1A;
   border: none;
-  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
-  transition: all 0.3s ease;
+  transition: opacity 0.15s ease;
 }
 
 .login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(255, 107, 53, 0.5);
+  opacity: 0.85;
 }
 
 .login-btn:active {
-  transform: translateY(0);
+  opacity: 0.75;
 }
 </style>

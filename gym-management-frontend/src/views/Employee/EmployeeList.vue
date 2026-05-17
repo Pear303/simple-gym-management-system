@@ -175,14 +175,11 @@ const getFieldLabel = (field) => {
 }
 
 const getStaffTagType = (staff) => {
-  const map = {
-    '健身教练': 'primary',
-    '助教': 'success',
-    '前台': 'warning',
-    '保洁': 'info',
-    '经理': 'danger'
-  }
-  return map[staff] || 'info'
+  if (staff.includes('教练')) return 'warning'
+  if (staff === '助教') return 'warning'
+  if (staff === '前台' || staff === '保洁') return 'success'
+  if (staff === '经理') return 'danger'
+  return 'info'
 }
 
 // 添加搜索条件
@@ -346,8 +343,8 @@ onMounted(() => {
 
 <style scoped>
 .employee-list {
-  background: #fff;
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
   padding: 24px;
 }
 
@@ -359,14 +356,15 @@ onMounted(() => {
 }
 
 .page-header h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #2D3436;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1A1A1A;
+  letter-spacing: -0.2px;
 }
 
 .search-bar {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 20px;
   flex-wrap: wrap;
   align-items: center;

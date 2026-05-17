@@ -5,8 +5,8 @@
     </div>
     <div class="stats-overview">
       <div class="stat-card">
-        <div class="stat-icon" style="background: linear-gradient(135deg, #FF6B35 0%, #FF8F66 100%);">
-          <el-icon :size="28"><User /></el-icon>
+        <div class="stat-icon">
+          <el-icon :size="20"><User /></el-icon>
         </div>
         <div class="stat-info">
           <span class="stat-label">会员总数</span>
@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon" style="background: linear-gradient(135deg, #4ECDC4 0%, #7EDAD3 100%);">
-          <el-icon :size="28"><Avatar /></el-icon>
+        <div class="stat-icon">
+          <el-icon :size="20"><Avatar /></el-icon>
         </div>
         <div class="stat-info">
           <span class="stat-label">员工总数</span>
@@ -76,45 +76,44 @@ onMounted(() => {
 
 <style scoped>
 .statistics {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
 .page-header {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .page-header h2 {
   font-size: 20px;
-  font-weight: 600;
-  color: #2D3436;
+  font-weight: 500;
+  color: #1A1A1A;
+  letter-spacing: -0.2px;
 }
 
 .stats-overview {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 24px;
+  gap: 2px;
+  margin-bottom: 32px;
+  background: #E8E8E8;
 }
 
 .stat-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
+  background: #FFFFFF;
+  padding: 28px 24px;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex-direction: column;
+  gap: 20px;
+  transition: background 0.15s ease;
+}
+
+.stat-card:hover {
+  background: #FAFAFA;
 }
 
 .stat-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
+  color: #666;
 }
 
 .stat-info {
@@ -123,35 +122,38 @@ onMounted(() => {
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #636E72;
+  font-size: 12px;
+  color: #999;
   margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .stat-value {
-  font-size: 24px;
-  font-weight: 600;
-  color: #2D3436;
+  font-size: 28px;
+  font-weight: 400;
+  color: #1A1A1A;
+  letter-spacing: -1px;
 }
 
 .charts-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 2px;
 }
 
 .chart-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
+  padding: 28px 24px;
 }
 
 .chart-card h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #2D3436;
-  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin-bottom: 20px;
+  letter-spacing: -0.2px;
 }
 
 .chart-placeholder {
@@ -160,17 +162,16 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f8f9fa;
-  border-radius: 8px;
-  color: #B2BEC3;
+  background: #FAFAFA;
+  color: #CCC;
 }
 
 .chart-placeholder p {
   margin-top: 12px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .stats-overview,
   .charts-container {
     grid-template-columns: 1fr;

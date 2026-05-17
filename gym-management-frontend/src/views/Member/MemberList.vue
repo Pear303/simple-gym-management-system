@@ -195,7 +195,7 @@ const getCardClassName = (type) => {
 }
 
 const getCardTagType = (type) => {
-  const map = { 1: 'warning', 2: 'success', 3: 'primary' }
+  const map = { 1: 'success', 2: 'warning', 3: 'danger' }
   return map[type] || 'info'
 }
 
@@ -360,8 +360,8 @@ onMounted(() => {
 
 <style scoped>
 .member-list {
-  background: #fff;
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
   padding: 24px;
 }
 
@@ -373,14 +373,15 @@ onMounted(() => {
 }
 
 .page-header h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #2D3436;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1A1A1A;
+  letter-spacing: -0.2px;
 }
 
 .search-bar {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 20px;
   flex-wrap: wrap;
   align-items: center;

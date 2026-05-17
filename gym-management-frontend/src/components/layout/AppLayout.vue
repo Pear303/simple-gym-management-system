@@ -66,9 +66,9 @@ onUnmounted(() => {
 }
 
 .sidebar {
-  background: #fff;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-  transition: width 0.3s ease;
+  background: #F5F5F5;
+  border-right: 1px solid #E8E8E8;
+  transition: width 0.2s ease;
   overflow: hidden;
   z-index: 100;
 }
@@ -76,28 +76,28 @@ onUnmounted(() => {
 .sidebar-mobile {
   position: fixed;
   left: 0;
-  top: 60px;
-  height: calc(100vh - 60px);
+  top: 56px;
+  height: calc(100vh - 56px);
 }
 
 .header {
-  background: #2D3436;
+  background: #1A1A1A;
   display: flex;
   align-items: center;
-  padding: 0 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 16px;
+  height: 56px;
 }
 
 .main-content {
-  background: #F8F9FA;
-  padding: 24px;
-  min-height: calc(100vh - 60px);
+  background: #FAFAFA;
+  padding: 32px;
+  min-height: calc(100vh - 56px);
   overflow-y: auto;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .fade-enter-from,

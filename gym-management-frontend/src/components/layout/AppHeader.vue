@@ -73,36 +73,39 @@ const handleCommand = async (command) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
+  height: 56px;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .toggle-btn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.15s ease;
 }
 
 .toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
 }
 
 .breadcrumb {
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 .breadcrumb-mobile {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 400;
 }
 
 .header-right {
@@ -113,19 +116,21 @@ const handleCommand = async (command) => {
 .user-info {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #fff;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background 0.3s;
+  padding: 6px 10px;
+  border-radius: 2px;
+  transition: all 0.15s ease;
+  font-size: 13px;
 }
 
 .user-info:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
 }
 
 .username {
-  font-size: 14px;
+  font-size: 13px;
 }
 </style>
