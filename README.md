@@ -8,6 +8,7 @@
 - **Spring Boot** 
 - **MyBatis**
 - **MySQL** 
+- **Redis**（缓存层）
 - **Maven** 
 
 ### 前端
@@ -117,6 +118,27 @@ npm run dev
 ```
 
 前端应用将在 `http://localhost:5173` 启动
+
+## Redis 缓存
+
+### 启动 Redis
+```bash
+# Windows 本地
+redis-server
+
+# 或 Docker
+docker run -d -p 6379:6379 redis
+```
+
+### 缓存策略
+| 缓存区域 | 过期时间 | 说明 |
+|---|---|---|
+| `memberCount` / `employeeCount` | 10 min | 总数统计 |
+| `member:detail` / `employee:detail` | 15 min | 单条详情 |
+| `member:page` | 5 min | 会员分页列表 |
+
+### 缓存失效
+增删改操作自动清除对应缓存，无需手动处理。
 
 ## API
 

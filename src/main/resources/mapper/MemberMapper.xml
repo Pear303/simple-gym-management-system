@@ -4,7 +4,7 @@
 
     <select id="selectById" resultType="com.gym.pojo.Member">
         SELECT member_id, member_name, member_gender, member_age,
-               member_height, memberweight, member_phone,
+               member_height, member_weight, member_phone,
                card_time, card_class, card_next_class
         FROM member
         WHERE member_id = #{memberId}
@@ -12,7 +12,7 @@
 
     <select id="selectByPhone" resultType="com.gym.pojo.Member">
         SELECT member_id, member_name, member_gender, member_age,
-               member_height, memberweight, member_phone,
+               member_height, member_weight, member_phone,
                card_time, card_class
         FROM member
         WHERE member_phone = #{memberPhone}
@@ -20,14 +20,14 @@
 
     <select id="selectAll" resultType="com.gym.pojo.Member">
         SELECT member_id, member_name, member_gender, member_age,
-               member_height, memberweight, member_phone,
+               member_height, member_weight, member_phone,
                card_time, card_class
         FROM member
     </select>
 
     <select id="selectByKeyword" resultType="com.gym.pojo.Member">
         SELECT member_id, member_name, member_gender, member_age,
-               member_height, memberweight, member_phone,
+               member_height, member_weight, member_phone,
                card_time, card_class
         FROM member
         WHERE member_name LIKE CONCAT('%', #{keyword}, '%')
@@ -36,7 +36,7 @@
 
     <select id="selectByRegex" resultType="com.gym.pojo.Member">
         SELECT member_id, member_name, member_gender, member_age,
-               member_height, memberweight, member_phone,
+               member_height, member_weight, member_phone,
                card_time, card_class
         FROM member
         <trim prefix="WHERE" prefixOverrides="AND|OR">
@@ -100,22 +100,22 @@
             <if test="field == 'memberHeight' and operator == null">
                 AND member_height = #{numValue}
             </if>
-            <if test="field == 'memberweight' and operator != null">
+            <if test="field == 'memberWeight' and operator != null">
                 <if test="operator == 'gt'">
-                    AND memberweight &gt; #{numValue}
+                    AND member_weight &gt; #{numValue}
                 </if>
                 <if test="operator == 'lt'">
-                    AND memberweight &lt; #{numValue}
+                    AND member_weight &lt; #{numValue}
                 </if>
                 <if test="operator == 'ge'">
-                    AND memberweight &gt;= #{numValue}
+                    AND member_weight &gt;= #{numValue}
                 </if>
                 <if test="operator == 'le'">
-                    AND memberweight &lt;= #{numValue}
+                    AND member_weight &lt;= #{numValue}
                 </if>
             </if>
-            <if test="field == 'memberweight' and operator == null">
-                AND memberweight = #{numValue}
+            <if test="field == 'memberWeight' and operator == null">
+                AND member_weight = #{numValue}
             </if>
             <if test="field == 'cardClass' and operator != null">
                 <if test="operator == 'gt'">

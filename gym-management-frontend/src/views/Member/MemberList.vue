@@ -92,8 +92,8 @@
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
       class="pagination"
-      @size-change="handleSizeChange"
-      @current-change="handlePageChange"
+      @size-change="onSizeChange"
+      @current-change="onPageChange"
     />
 
     <MemberForm ref="memberFormRef" @success="loadMembers" />
@@ -117,6 +117,16 @@ const {
   handlePageChange,
   handleSizeChange
 } = createPagination(30)
+
+const onPageChange = (page) => {
+  handlePageChange(page)
+  loadMembers()
+}
+
+const onSizeChange = (size) => {
+  handleSizeChange(size)
+  loadMembers()
+}
 
 const keyword = ref('')
 const searchField = ref('')
@@ -231,8 +241,7 @@ const loadMembers = async () => {
     if (selectedConditions.value.length === 0) {
       const res = await getMemberList(currentPage.value, currentPageSize.value)
       if (res.success) {
-        total.value = res.data.total
-        updateData(res.data || [])
+        updateData(res.data.list || [], res.data.total)
       }
     } else {
       let resultList = null

@@ -1,11 +1,14 @@
 package com.gym.pojo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class Member {
+public class Member implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer memberId;
     private String memberName;
     private String memberGender;
@@ -13,6 +16,7 @@ public class Member {
     private Integer memberHeight;
     private Integer memberWeight;
     private String memberPhone;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate cardTime;
     private Integer cardClass;
     private Integer cardNextClass;
