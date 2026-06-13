@@ -88,8 +88,8 @@
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
       class="pagination"
-      @size-change="handleSizeChange"
-      @current-change="handlePageChange"
+      @size-change="onSizeChange"
+      @current-change="onPageChange"
     />
 
     <EmployeeForm ref="employeeFormRef" @success="loadEmployees" />
@@ -113,6 +113,16 @@ const {
   handlePageChange,
   handleSizeChange
 } = createPagination(30)
+
+const onPageChange = (page) => {
+  handlePageChange(page)
+  loadEmployees()
+}
+
+const onSizeChange = (size) => {
+  handleSizeChange(size)
+  loadEmployees()
+}
 
 const keyword = ref('')
 const searchField = ref('')
@@ -222,9 +232,9 @@ const loadEmployees = async () => {
   loading.value = true
   try {
     if (selectedConditions.value.length === 0) {
-      const res = await getEmployeeList()
+      const res = await getEmployeeList(currentPage.value, currentPageSize.value)
       if (res.success) {
-        updateData(res.data || [])
+        updateData(res.data.list || [], res.data.total, true)
       }
     } else {
       let resultList = null
@@ -242,7 +252,7 @@ const loadEmployees = async () => {
           }
         }
       }
-      updateData(resultList || [])
+      updateData(resultList || [], undefined, false)
     }
   } catch (error) {
     ElMessage.error('获取员工列表失败')

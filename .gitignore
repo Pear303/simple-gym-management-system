@@ -86,3 +86,4 @@ Desktop.ini
 # IntelliJ IDEA 配置和缓存
 gym-management-frontend/IntelliJ IDEAIntelliJ IDEA*/
 gym-management-frontend/.idea/
+/src/main/java/com/gym/test.java

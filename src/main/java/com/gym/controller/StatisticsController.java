@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Supplier;
 
 @RestController
@@ -32,6 +35,23 @@ public class StatisticsController {
     @GetMapping("/employee/total-count")
     public ResponseEntity<Map<String, Object>> employeeTotalCount() {
         return countQuery(() -> employeeService.selectTotalCount(), "员工");
+    }
+
+    @GetMapping("/stats/parallel")
+    public ResponseEntity<Map<String, Object>> parallelStats() throws Exception {
+        long start = System.currentTimeMillis();
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Future<Integer> memberFuture = executor.submit(() -> memberService.selectTotalCount());
+        Future<Integer> employeeFuture = executor.submit(() -> employeeService.selectTotalCount());
+
+        Integer memberCount = memberFuture.get();
+        Integer employeeCount = employeeFuture.get();
+
+        Map<String, Object> result = new HashMap<>(2);
+        result.put("memberCount", memberCount);
+        result.put("employeeCount", employeeCount);
+        return ResponseEntity.ok(result);
     }
 
     private ResponseEntity<Map<String, Object>> countQuery(Supplier<Integer> countSupplier, String entityName) {

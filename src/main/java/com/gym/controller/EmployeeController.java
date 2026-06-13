@@ -1,5 +1,6 @@
 package com.gym.controller;
 
+import com.gym.dto.PageResult;
 import com.gym.pojo.Employee;
 import com.gym.service.EmployeeService;
 import com.gym.util.ResponseUtil;
@@ -21,17 +22,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Map<String, Object>> list() {
-        Map<String, Object> result = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> list(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "30") int pageSize) {
         try {
-            List<Employee> employees = employeeService.selectAll();
-            result.put("success", true);
-            result.put("data", employees);
-            return ResponseEntity.ok(result);
+            PageResult<Employee> pageResult = employeeService.getEmployeePage(pageNum, pageSize);
+            return ResponseEntity.ok(ResponseUtil.success(pageResult));
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.internalServerError().body(result);
+            return ResponseEntity.internalServerError().body(ResponseUtil.error("查询失败: " + e.getMessage()));
         }
     }
 

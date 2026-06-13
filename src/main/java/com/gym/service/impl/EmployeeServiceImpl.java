@@ -1,5 +1,6 @@
 package com.gym.service.impl;
 
+import com.gym.dto.PageResult;
 import com.gym.mapper.EmployeeMapper;
 import com.gym.pojo.Employee;
 import com.gym.service.EmployeeService;
@@ -40,6 +41,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             return employeeMapper.selectByRegex(field, parsed.operator, parsed.numValue, parsed.likePattern, parsed.startDate, parsed.endDate);
         }
         return employeeMapper.selectByRegex(field, operator, numValue, likePattern, null, null);
+    }
+
+    @Override
+    @Cacheable(value = "employee:page", key = "#pageNum + '-' + #pageSize")
+    public PageResult<Employee> getEmployeePage(int pageNum, int pageSize) {
+        int offset = (pageNum - 1) * pageSize;
+        List<Employee> list = employeeMapper.selectPage(offset, pageSize);
+        int total = employeeMapper.selectTotalCount();
+        return new PageResult<>(total, list);
     }
 
     private ParseResult parseSearchValue(String field, String value) {
@@ -299,7 +309,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Caching(evict = {
-        @CacheEvict(value = "employeeCount", allEntries = true)
+        @CacheEvict(value = "employeeCount", allEntries = true),
+        @CacheEvict(value = "employee:page", allEntries = true)
     })
     public int delete(Integer employeeId) {
         return employeeMapper.deleteById(employeeId);
@@ -307,7 +318,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Caching(evict = {
-        @CacheEvict(value = "employeeCount", allEntries = true)
+        @CacheEvict(value = "employeeCount", allEntries = true),
+        @CacheEvict(value = "employee:page", allEntries = true)
     })
     public int insert(Employee employee) {
         return employeeMapper.insert(employee);
@@ -316,7 +328,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Caching(evict = {
         @CacheEvict(value = "employee:detail", key = "#employee.employeeId"),
-        @CacheEvict(value = "employeeCount", allEntries = true)
+        @CacheEvict(value = "employeeCount", allEntries = true),
+        @CacheEvict(value = "employee:page", allEntries = true)
     })
     public int update(Employee employee) {
         return employeeMapper.update(employee);

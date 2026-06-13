@@ -1,10 +1,10 @@
 import request from './index'
 
-export function getEmployeeList(params) {
+export function getEmployeeList(pageNum = 1, pageSize = 30) {
   return request({
     url: '/employee/list',
     method: 'get',
-    params
+    params: { pageNum, pageSize }
   })
 }
 

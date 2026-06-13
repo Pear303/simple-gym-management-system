@@ -127,4 +127,12 @@
         SELECT COUNT(*) FROM employee
     </select>
 
+    <select id="selectPage" resultType="com.gym.pojo.Employee">
+        SELECT employee_id, employee_name, employee_gender, employee_age,
+               entry_time, staff, employee_message
+        FROM employee
+        ORDER BY employee_id
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
 </mapper>

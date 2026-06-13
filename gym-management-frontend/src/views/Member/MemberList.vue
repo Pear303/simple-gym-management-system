@@ -241,7 +241,7 @@ const loadMembers = async () => {
     if (selectedConditions.value.length === 0) {
       const res = await getMemberList(currentPage.value, currentPageSize.value)
       if (res.success) {
-        updateData(res.data.list || [], res.data.total)
+        updateData(res.data.list || [], res.data.total, true)
       }
     } else {
       let resultList = null
@@ -259,7 +259,7 @@ const loadMembers = async () => {
           }
         }
       }
-      updateData(resultList || [])
+      updateData(resultList || [], undefined, false)
     }
   } catch (error) {
     ElMessage.error('获取会员列表失败')

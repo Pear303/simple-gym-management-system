@@ -28,4 +28,6 @@ public interface EmployeeMapper {
 
     int selectTotalCount();
 
+    List<Employee> selectPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
+
 }
